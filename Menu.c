@@ -3,11 +3,14 @@
 #endif
 
 #include <stdio.h>
+#include <string.h>
+#include "Menu.h"
 #include "Search_menu.h"
 #include "Data.h"
-#include "Menu.h"
 
-#define MANUAL_TYPING
+//#define MANUAL_TYPING
+
+
 void menu(const char* file_name)
 {
     functions sv = add;
@@ -69,6 +72,7 @@ void menu(const char* file_name)
     }
 }
 
+
 static int print_records(const char* file_name)
 {
     data person;
@@ -81,9 +85,8 @@ static int print_records(const char* file_name)
     rewind(file);
     int i = 0;
     int j = 0;
-    //////
-    printf("%-5s %-48s %-15s %-23s %-23s %-5s\n", "Index", "Name", "Specialization", "Summa", "Rating", "Document");//поменять!!!!!!!!!
-    //////
+
+    printf("%-5s %-48s %-15s %-23s %-23s %-5s\n", "Index", "Name", "Specialization", "Summa", "Rating", "Document");
     printf("\n");
 
     while (fread(&person, sizeof(person), 1, file) == 1)
@@ -91,14 +94,15 @@ static int print_records(const char* file_name)
         i++;
         if (person.is_deleted != 1)
         {
-            printf("%-5d %-48s %-15s %-23d %-23d %-5d\n", i, person.name, person.specialization, person.summa, person.rating, person.document);
+            printf("%-5d %-48s %-15s %-23d %-23d %-5s\n", i, person.name, person.specialization, person.summa, person.rating, person.document ? "No" : "Yes");
             j++;
         }
     }
     fclose(file);
     return j;
 }
-//подредачить названия
+
+
 static void edit_record(const char* file_name, int index)
 {
     FILE* file = fopen(file_name, "rb+");
@@ -133,15 +137,19 @@ static void edit_record(const char* file_name, int index)
         return;
     }
     printf("Enter: Is the applicant submitted the original document (yes - 1/no - 0):\n");
-    if ((scanf_c("%d", &person.document) != 1) || ((person.document == 1) && (person.document == 0)))
+    int document_int=0;
+    bool document=0;
+    if ((scanf_c("%d", &document_int) != 1 )||( (document_int != 0 && document_int != 1)))
     {
-        printf("Input error\n");
+        printf("Input error!\n");
         return;
     }
+    document = (document_int == 1);
     fseek(file, (index - 1) * sizeof(data), SEEK_SET);
     fwrite(&person, sizeof(person), 1, file);
     fclose(file);
 }
+
 
 static void delete_record(const char* file_name, int index)
 {
@@ -170,6 +178,7 @@ static void delete_record(const char* file_name, int index)
     fclose(file);
     printf("Record successfully deleted!\n");
 }
+
 
 static void add_record(const char* file_name)
 {
@@ -203,14 +212,17 @@ static void add_record(const char* file_name)
         return;
     }
     printf("Enter: Is the applicant submitted the original document (yes - 1/no - 0):\n");
-    if ((scanf_c("%d", &person.document) != 1) || ((person.document == 1) && (person.document == 0)))
+    int document_int;
+    if (scanf_c("%d", &document_int) != 1 || (document_int != 0 && document_int != 1))
     {
-        printf("Input error\n");
+        printf("Input error!\n");
         return;
     }
+    bool document = (document_int == 1);
     fwrite(&person, sizeof(person), 1, file);
 #else
-    FILE* file_data = fopen("records.bin", "rb");
+
+    FILE* file_data = fopen("students.bin", "rb");
     if (file_data == NULL) {
         fclose(file);
         fclose(file_data);
@@ -223,6 +235,7 @@ static void add_record(const char* file_name)
         fwrite(&person, sizeof(person), 1, file);
     }
     fclose(file_data);
+
 #endif
     fclose(file);
 }

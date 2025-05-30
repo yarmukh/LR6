@@ -1,6 +1,10 @@
 #ifndef MENU_H
 #define MENU_H
-
+#include <stdio.h>
+#include <string.h>
+#include "Menu.h"
+#include "Search_menu.h"
+#include "Data.h"
 typedef enum //перечисление для menu
 {
     add = 1,

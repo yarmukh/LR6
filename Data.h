@@ -4,13 +4,17 @@
 
 #define MAX_NAME_SIZE 50 // максимальный размер имени
 #define MAX_MISC_SIZE (MAX_NAME_SIZE / 2) // максимальный размер региона, предмета и т.д.
-//#define MANUAL_TYPING
+
+#include <stdio.h>
+#include <string.h>
+#include "Menu.h"
+#include "Search_menu.h"
+#include "Data.h"
 typedef struct data //структура для 25 варианта
 {
     char name[MAX_NAME_SIZE]; //ФИО
     char specialization[MAX_MISC_SIZE]; // специальность
     int summa; // сумма баллов по вступительным испытаниям
-    //char subject[MAX_MISC_SIZE]; // предмет
     int rating; // номер в рейтинге
     bool document; // признак сдачи оригинала документа (сдал/не сдал)
     int is_deleted; // флаг удаления записи

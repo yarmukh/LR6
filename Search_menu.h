@@ -1,5 +1,9 @@
 #ifndef SEARCH_MENU_H
 #define SEARCH_MENU_H
+#include <stdio.h>
+#include <string.h>
+#include "Menu.h"
+#include "Search_menu.h"
 #include "Data.h"
 
 //перечисление для search_menu для удобства и читабельности

@@ -3,9 +3,10 @@
 #endif
 
 #include <stdio.h>
+#include <string.h>
+#include "Menu.h"
 #include "Search_menu.h"
 #include "Data.h"
-#include "Menu.h"
 
 
 void search_menu(const char* file_name)
@@ -69,13 +70,14 @@ void search_menu(const char* file_name)
         }
         case document:
         {
-            bool document;
+            int document_int;
             printf("\nIs the applicant submitted the original document (yes - 1/no - 0)\n");
-            if ((scanf_c("%d", &document) != 1 )|| ((document == 1 )&&( document == 0)))
+            if (scanf_c("%d", &document_int) != 1 || (document_int != 0 && document_int != 1))
             {
                 printf("Input error!\n");
                 break;
             }
+            bool document = (document_int == 1);
             search_record(file_name, is_correct_document, &document);
             break;
         }

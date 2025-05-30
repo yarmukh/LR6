@@ -2,9 +2,12 @@
 #define _CRT_SECURE_NO_WARNINGS
 #endif
 
+#include <stdio.h>
+#include <string.h>
+#include "Menu.h"
+#include "Search_menu.h"
 #include "Data.h"
 #include <stdarg.h>
-#include <stdio.h>
 
 int scanf_c(const char* format, ...) 
 {
